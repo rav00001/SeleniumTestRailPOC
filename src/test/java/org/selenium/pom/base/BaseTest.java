@@ -57,9 +57,9 @@ public class BaseTest {
 
     @BeforeSuite
     public void createSuite(ITestContext ctx) throws Exception {
-        client = new APIClient("https://ravi001.testrail.io/");
-        client.setUser("ravi.kr.gupta1994@gmail.com");
-        client.setPassword("Apple@123");
+        client = new APIClient("https://ravi00001.testrail.io/");
+        client.setUser("rav74354@gmail.com");
+        client.setPassword("Cat@1234");
         Map data = new HashMap();
         data.put("include_all",true);
         data.put("name","Test Run "+System.currentTimeMillis());
@@ -74,19 +74,23 @@ public class BaseTest {
 
     @BeforeMethod
     public void beforeTest(ITestContext ctx) throws NoSuchMethodException, ClassNotFoundException {
-        LogSuiteListener listOfTestClass = new LogSuiteListener();
+
        // Iterator<String> i=listOfTestClass.set.iterator();
-        for (Map.Entry<String,String> entry : listOfTestClass.set.entrySet())
+        for (Map.Entry<String,String> entry : LogSuiteListener.set.entries())
         {
             String x=entry.getKey();
             Class<?> c = null;
+            Method m =null;
             c=Class.forName(x);
-            Method m = c.getMethod(entry.getValue());
+            m = c.getMethod(entry.getValue());
             if (m.isAnnotationPresent(UseAsTestRailId.class)) {
                 UseAsTestRailId ta = m.getAnnotation(UseAsTestRailId.class);
                 System.out.println(ta.id());
                 ctx.setAttribute("caseId",ta.id());
+                LogSuiteListener.set.remove(entry.getKey(),entry.getValue());
             }
+
+            break;
         }
 
     }
@@ -124,6 +128,9 @@ public class BaseTest {
 
     @AfterMethod
     public void afterTest(ITestResult result, ITestContext ctx) throws Exception {
+        client = new APIClient("https://ravi00001.testrail.io/");
+        client.setUser("rav74354@gmail.com");
+        client.setPassword("Cat@1234");
         Map data = new HashMap();
         if(result.isSuccess()) {
             data.put("status_id",1);

@@ -1,15 +1,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Suite1" verbose="1" thread-count="2" parallel="classes">
+<suite name="Suite1" verbose="1" thread-count="1" parallel="classes">
     <listeners>
         <listener class-name="org.selenium.pom.utils.testrail.listeners.LogSuiteListener"/>
     </listeners>
     <test name="Chrome">
         <parameter name="browser" value="CHROME"/>
-        <classes>
-            <class name="org.selenium.pom.tests.LoginTest"/>
-            <class name="org.selenium.pom.tests.AddToCartTest"/>
-        </classes>
+        <packages>
+            <package name="org.selenium.pom.tests" >
+                <!--                <methods>
+                                    <include name="NavigateFromHomeToStoreUsingMainMenu"/>
+                                </methods>-->
+            </package>
+        </packages>
     </test>
 
 </suite>
